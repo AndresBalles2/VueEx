@@ -1,39 +1,46 @@
 <script setup>
-    import { ref } from "vue";
-    
-    const isChecked = ref(true)
 
-    const users = [ "Pepe", "Ana", "Juana", "Lola " ]
+import { ref } from "vue";
+import IconGrid from './IconGrid.vue'
+import Buguesa from './Buguesa.vue'
+
+const isChecked = ref(true)
+
+const users = ["Pepe", "Ana", "Juana", "Lola ", "Kactuswow", "andreswow"]
+
+function changeToTrue() {
+    isChecked.value = true
+}
+
+
+function changeToFalse() {
+    isChecked.value = false
+}
+
 </script>
 
 <template>
 
-    <div class=" ml-[700px] mt-[400px] bg-slate-200 max-w-[600px] p-14 rounded-xl hover:cursor-pointer hover:bg-slate-300 bg">
 
-        <input type="checkbox" id="check" v-model="isChecked" />
-        <label for="check" class="font-semibold select-none"> Clic</label>
+    <main class="max-w-xl w-full">
 
-        <div class="bg-slate-500 text-white rounded-md py-1 px-2 max-w-[125px] my-2 font-medium select-none"
-        :class="{'bg-green-500': isChecked }">
-            This is a message
+        <div class="flex justify-end gap-3 mb-2 text-gray-500">
+            <button @click="changeToTrue" :class="{ 'text-green-500 bg-gray-300 rounded-md': isChecked }">
+                <IconGrid></IconGrid>
+            </button>
+            <button @click="changeToFalse" :class="{ 'text-green-500 bg-gray-300 rounded-md': !isChecked }">
+                <Buguesa></Buguesa>
+            </button>
         </div>
 
-        <div v-if="isChecked" class="font-semibold text-blue-500">
-            Nice!😀
-        </div>
+        <section class=" grid gap-4" :class="{ 'grid-cols-3': isChecked }, { 'grid-cols-1': !isChecked }">
+            <div v-for="(user, index) in  users " class="bg-green-200 p-2"
+                :class="{ 'h-40': isChecked }, { 'flex gap-3 items-center': !isChecked }">
+                <div class="bg-white " :class="{ 'w-full h-20': isChecked }, { 'w-10 h-10': !isChecked }">
+                </div>
+                <p class="underline">{{ user }}</p>
+            </div>
+        </section>
+    </main>
 
-        <div v-else class="font-semibold text-red-500">
-            You can see it 'cause didn't comply the "if" 😭
-        </div>
-
-        <ul class="flex gap-5">
-            <li v-for="( user , index ) in users" :key="index">
-
-                {{ index }} {{ user }}
-
-            </li>
-        </ul>
-
-    </div>
-    
-</template> 
+</template>
